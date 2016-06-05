@@ -6,8 +6,7 @@ foreach($module in $Publicmodules) { . $module.FullName  }
 
 foreach($module in $Privatemodules) { . $module.fullname}
 
-
-#Create / Read config
+<#Create / Read config
     if(-not (Test-Path -Path "$here\PSSlack.xml" -ErrorAction SilentlyContinue))
     {
         Try
@@ -37,5 +36,5 @@ foreach($module in $Privatemodules) { . $module.fullname}
     {   
         Write-Warning "Error importing PSSlack config: $_"
     }
-
-Export-ModuleMember -Function $Public.Basename
+#>
+Export-ModuleMember -Function $PublicModules.Basename

@@ -58,7 +58,7 @@ PowerShellVersion = '3.0'
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = '*'
+FunctionsToExport = @('Find-SlackMessage','Get-PSSlackConfig','Get-SlackChannel','Get-SlackHistory','Get-SlackUser','New-SlackField','New-SlackMessage','New-SlackMessageAttachment','Send-SlackAPI','Send-SlackFile','Send-SlackMessage','Set-PSSlackConfig')
 
 # Cmdlets to export from this module
 CmdletsToExport = '*'
