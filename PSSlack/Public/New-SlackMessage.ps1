@@ -178,7 +178,7 @@
         [validateset($True, $False)]
         [bool]$UnfurlMedia,
 
-        [Parameter(Mandatory=$true,
+        [Parameter(Mandatory=$false,
                    ValueFromPipeline = $true,
                    Position=1)]
         [PSTypeName('PSSlack.MessageAttachment')]
@@ -204,7 +204,7 @@
             'channel'     { $body.channel      = $Channel}
             'text'        { $body.text         = $text}
             'username'    { $body.username     = $username}
-            'as_user'     { $body.asuser       = $AsUser}
+            'asuser'     { $body.as_user       = $AsUser}
             'iconurl'     { $body.icon_url     = $iconurl}
             'iconemoji'   { $body.icon_emoji   = $iconemoji}
             'linknames'   { $body.link_names   = 1}
