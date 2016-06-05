@@ -1,36 +1,27 @@
-#Get public and private function definition files.
-    $Public  = @( Get-ChildItem -Path $PSScriptRoot\Public\*.ps1 -ErrorAction SilentlyContinue )
-    $Private = @( Get-ChildItem -Path $PSScriptRoot\Private\*.ps1 -ErrorAction SilentlyContinue )
-    $ModuleRoot = $PSScriptRoot
+$Here = Split-Path -Parent $MyInvocation.MyCommand.Path
+$PublicModules = Get-ChildItem "$here\Public" -Filter '*.ps1' -Recurse | Where-Object {$_.name -NotMatch "Tests.ps1"}
+$PrivateModules = Get-ChildItem "$here\Private" -Filter '*.ps1' -Recurse | Where-Object {$_.name -NotMatch "Tests.ps1"}
 
-#Dot source the files
-    Foreach($import in @($Public + $Private))
-    {
-        Try
-        {
-            . $import.fullname
-        }
-        Catch
-        {
-            Write-Error -Message "Failed to import function $($import.fullname): $_"
-        }
-    }
+foreach($module in $Publicmodules) { . $module.FullName  }
+
+foreach($module in $Privatemodules) { . $module.fullname}
+
 
 #Create / Read config
-    if(-not (Test-Path -Path "$PSScriptRoot\PSSlack.xml" -ErrorAction SilentlyContinue))
+    if(-not (Test-Path -Path "$here\PSSlack.xml" -ErrorAction SilentlyContinue))
     {
         Try
         {
-            Write-Warning "Did not find config file $PSScriptRoot\PSSlack.xml, attempting to create"
+            Write-Warning "Did not find config file $here\PSSlack.xml, attempting to create"
             [pscustomobject]@{
                 Uri = $null
                 Token = $null
                 ArchiveUri = $null
-            } | Export-Clixml -Path "$PSScriptRoot\PSSlack.xml" -Force -ErrorAction Stop
+            } | Export-Clixml -Path "$here\PSSlack.xml" -Force -ErrorAction Stop
         }
         Catch
         {
-            Write-Warning "Failed to create config file $PSScriptRoot\PSSlack.xml: $_"
+            Write-Warning "Failed to create config file $here\PSSlack.xml: $_"
         }
     }
 
